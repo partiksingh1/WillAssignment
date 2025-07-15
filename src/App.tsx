@@ -30,6 +30,8 @@ function App() {
     setTestatorDetails({ ...testatorDetails, [e.target.name]: e.target.value });
   };
 
+  // Beneficiary CRUD
+
   const addBeneficiary = () => {
     setBeneficiaries([...beneficiaries, {
       sn: beneficiaries.length + 1,
@@ -48,6 +50,41 @@ function App() {
 
   const removeBeneficiary = (index: number) => {
     setBeneficiaries(beneficiaries.filter((_, i) => i !== index));
+  }
+
+  // Asset CRUD
+
+  const addAssetRow = (assetType: string) => {
+    switch (assetType) {
+      case 'bankAccounts':
+        setBankAccounts([...bankAccounts, { sn: bankAccounts.length + 1, bankName: '', accountNumber: '', typeRemark: '', beneficiaryName: '', share: '' }])
+        break;
+    }
+  }
+
+  const updateAssetRow = (
+    assetType: string,
+    index: number,
+    field: string,
+    value: string
+  ) => {
+    const updateFn = (prevAssets: any[]) => {
+      const updatedAssets = [...prevAssets];
+      (updatedAssets[index] as any)[field] = value;
+      return updatedAssets;
+    }
+    switch (assetType) {
+      case 'bankAccounts':
+        setBankAccounts(updateFn as (prev: BankAccount[]) => BankAccount[]);
+    }
+  }
+
+  const removeAssetRow = (assetType: string, index: number) => {
+    const removeFn = (prevAssets: any[]) => prevAssets.filter((_, i) => i !== index);
+    switch (assetType) {
+      case 'bankAccounts':
+        setBankAccounts(removeFn as (prev: BankAccount[]) => BankAccount[]);
+    }
   }
   const [currentStep, setCurrentStep] = useState<number>(0);
 
@@ -212,6 +249,55 @@ function App() {
             className="mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Add Beneficiary
+          </button>
+        </div>
+      )}
+      {/* Bank Accounts */}
+      {currentStep === 2 && (
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-indigo-600 mb-4">Bank Accounts</h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow-sm">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">S.N.</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bank Name</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account Number</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type / Remark</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Beneficiary's Name</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">% Share</th>
+                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {bankAccounts.map((account, index) => (
+                  <tr key={index}>
+                    <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">{account.sn}</td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <input type="text" value={account.bankName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAssetRow('bankAccounts', index, 'bankName', e.target.value)} className="w-full border border-gray-300 rounded-md p-1 text-sm" />
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <input type="text" value={account.accountNumber} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAssetRow('bankAccounts', index, 'accountNumber', e.target.value)} className="w-full border border-gray-300 rounded-md p-1 text-sm" />
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <input type="text" value={account.typeRemark} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAssetRow('bankAccounts', index, 'typeRemark', e.target.value)} className="w-full border border-gray-300 rounded-md p-1 text-sm" />
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <input type="text" value={account.beneficiaryName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAssetRow('bankAccounts', index, 'beneficiaryName', e.target.value)} className="w-full border border-gray-300 rounded-md p-1 text-sm" />
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                      <input type="number" value={account.share} onChange={(e: React.ChangeEvent<HTMLInputElement>) => updateAssetRow('bankAccounts', index, 'share', e.target.value)} className="w-full border border-gray-300 rounded-md p-1 text-sm" />
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap text-right text-sm font-medium">
+                      <button onClick={() => removeAssetRow('bankAccounts', index)} className="text-red-600 hover:text-red-900 ml-2">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <button onClick={() => addAssetRow('bankAccounts')} className="mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Add Bank Account
           </button>
         </div>
       )}
