@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Last Will and Testament</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 {
+      color: #1a202c;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    h1 {
+      font-size: 2.5em;
+      border-bottom: 2px solid #4f46e5;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    h2 {
+      font-size: 1.8em;
+      color: #4f46e5;
+      margin-top: 25px;
+      border-bottom: 1px solid #a78bfa;
+      padding-bottom: 5px;
+    }
+    h3 {
+      font-size: 1.4em;
+      color: #6d28d9;
+      margin-top: 20px;
+    }
+    p {
+      margin-bottom: 10px;
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #e0e7ff;
+      font-weight: bold;
+      color: #312e81;
+    }
+    .signature-block {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .signature-item {
+      flex: 1;
+      min-width: 250px;
+      margin: 15px;
+      padding: 15px;
+      border: 1px dashed #9ca3af;
+      border-radius: 6px;
+      background-color: #f0f4f8;
+    }
+    .signature-line {
+      border-bottom: 1px solid #333;
+      margin-top: 40px;
+      margin-bottom: 5px;
+    }
+    .footer-note {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>WILL AND TESTAMENT</h1>
+
+  <p>I, <strong><%= testator.name %></strong>, son of <strong><%= testator.sonOf %></strong>, residing at <strong><%= testator.residingAt %></strong>, declare this to be my LAST WILL being made on <strong><%= testator.willDate %></strong>.</p>
+
+  <p>I revoke all prior wills, codicils &amp; testamentary dispositions previously made by me. I am in
+    good health and of sound mind, and am not making this will under any persuasion or
+    coercion.</p>
+    <p>
+      I give, devise and bequeath all remaining movable and immovable assets, financial and
+physical assets owned by me and belonging to no one else to the following Beneficiaries as
+mentioned in this Will:
+    </p>
+
+  <h2>List of Beneficiaries</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>S.N.</th>
+        <th>Name</th>
+        <th>Relationship</th>
+        <th>PAN / Aadhar</th>
+        <th>Residence</th>
+        <th>Age</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% beneficiaries.forEach((b, index) => { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= b.name %></td>
+          <td><%= b.relationship %></td>
+          <td><%= b.id %></td>
+          <td><%= b.residence %></td>
+          <td><%= b.age %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <p>Below is the list of Assets and Percentage Share of each asset I would like to transfer to the
+    above Beneficiaries:</p>
+
+  <h2>Movable Assets (Financial Assets)</h2>
+
+  <% if (bankAccounts) { %>
+    <h3>a. Bank Accounts</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Bank</th>
+          <th>Account No</th>
+          <th>Type</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bankAccounts.forEach((acc, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= acc.bank %></td>
+            <td><%= acc.number %></td>
+            <td><%= acc.type %></td>
+            <td><%= acc.beneficiary %></td>
+            <td><%= acc.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (insurancePolicies) { %>
+    <h3>b. Insurance Policies</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Policy Name</th>
+          <th>Policy No</th>
+          <th>Type</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% insurancePolicies.forEach((policy, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= policy.name %></td>
+            <td><%= policy.number %></td>
+            <td><%= policy.type %></td>
+            <td><%= policy.beneficiary %></td>
+            <td><%= policy.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (stocks) { %>
+    <h3>c. Stocks</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Brokerage Firm</th>
+          <th>Account No</th>
+          <th>Type / Remark</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% stocks.forEach((stock, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= stock.brokerageFirm %></td>
+            <td><%= stock.accountNo %></td>
+            <td><%= stock.typeRemark %></td>
+            <td><%= stock.beneficiaryName %></td>
+            <td><%= stock.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+  
+  <% if (mutualFunds) { %>
+    <h3>d. Mutual Funds</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>MF Distributor</th>
+          <th>Account No</th>
+          <th>Type / Remark</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% mutualFunds.forEach((mf, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= mf.mfDistributor %></td>
+            <td><%= mf.accountNo %></td>
+            <td><%= mf.typeRemark %></td>
+            <td><%= mf.beneficiaryName %></td>
+            <td><%= mf.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+  <h2>Movable Assets (Physical Assets)</h2>
+
+  <% if (jewellery) { %>
+    <h3>e. Jewellery</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Type of Jewellery</th>
+          <th>Invoice Number</th>
+          <th>Type / Remark</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% jewellery.forEach((item, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= item.typeOfJewellery %></td>
+            <td><%= item.invoiceNumber %></td>
+            <td><%= item.typeRemark %></td>
+            <td><%= item.beneficiaryName %></td>
+            <td><%= item.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <h2>Immovable Assets</h2>
+
+  <% if (house) { %>
+    <h3>f. House Properties</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Name of Property</th>
+          <th>Registration Number</th>
+          <th>Type / Remark</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% house.forEach((property, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= property.nameOfProperty %></td>
+            <td><%= property.registrationNumber %></td>
+            <td><%= property.typeRemark %></td>
+            <td><%= property.beneficiaryName %></td>
+            <td><%= property.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+  
+  <% if (land) { %>
+    <h3>g. Land Properties</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>S.N.</th>
+          <th>Name of Land</th>
+          <th>Registration Number</th>
+          <th>Type / Remark</th>
+          <th>Beneficiary</th>
+          <th>% Share</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% land.forEach((property, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= property.nameOfLand %></td>
+            <td><%= property.registrationNumber %></td>
+            <td><%= property.typeRemark %></td>
+            <td><%= property.beneficiaryName %></td>
+            <td><%= property.share %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <h2>Executors</h2>
+<p>
+  I appoint my elder brother <strong><%= executors.primaryName %></strong>, son of <strong><%= executors.primarySonOf %></strong>, resident of <strong><%= executors.primaryResidentOf %></strong>, to be the executor of this will.
+  If <%= executors.primaryName %> predeceases before me, my younger sister <strong><%= executors.alternateName %></strong>, daughter of <strong><%= executors.alternateDaughterOf %></strong>, resident of <strong><%= executors.alternateResidentOf %></strong>, will be the executor of this will.
+</p>
+
+  <p>I hereby sign this will on <strong><%= testator.date %></strong> at <strong><%= testator.place %></strong>:</p>
+
+  <div class="signature-block">
+    <% [1, 2].forEach(i => { %>
+      <div class="signature-item">
+        <div class="signature-line"></div>
+        <p><strong>Witness <%= i %> (Sign)</strong></p>
+        <p>Name:</p>
+        <p>Address:</p>
+        <p>Date:</p>
+      </div>
+    <% }) %>
+    <div class="signature-item">
+      <div class="signature-line"></div>
+      <p><strong>Testator (Sign)</strong></p>
+      <p>Name: <%= testator.name %></p>
+      <p>Address: <%= testator.address %></p>
+      <p>Date: <%= testator.date %></p>
+    </div>
+  </div>
+
+  <p class="footer-note">This document is a sample and should be reviewed by a legal professional.</p>
+
+</body>
+</html>
