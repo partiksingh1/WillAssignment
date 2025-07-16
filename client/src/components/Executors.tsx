@@ -11,7 +11,7 @@ export const ExecutorsComponent: React.FC<ExecutorProp> = ({ executors, setExecu
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-indigo-600 mb-4">Executors & Guardianship</h2>
+            <h2 className="text-2xl font-bold text-black my-4">Executors & Guardianship</h2>
             <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-gray-800">Executors</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -85,12 +85,6 @@ export const ExecutorsComponent: React.FC<ExecutorProp> = ({ executors, setExecu
                         />
                     </div>
                 </div>
-
-                <h3 className="text-xl font-semibold text-gray-800 mt-8">Guardianship Details</h3>
-                <p className="text-gray-600">
-                    This section assumes the guardianship clause from the provided template: "If my wife Reema Saxena predeceases me, I appoint my elder brother Mr. Arpit Saxena as the guardian for my children Natasha and Sameer till they turn age 21. He shall be responsible for taking care of assets till age 21 and handing over the assets."
-                    For a fully dynamic version, these fields would also be input fields.
-                </p>
             </div>
         </div>
     )

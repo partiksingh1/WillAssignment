@@ -18,7 +18,7 @@ export const BeneficiariesComponent: React.FC<BeneficiaryProps> = ({ beneficiari
     };
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-indigo-600 mb-4">Beneficiaries</h2>
+            <h2 className="text-2xl font-bold text-black my-4">Beneficiaries</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow-sm">
                     <thead className="bg-gray-50">
@@ -91,7 +91,7 @@ export const BeneficiariesComponent: React.FC<BeneficiaryProps> = ({ beneficiari
             </div>
             <button
                 onClick={addBeneficiary}
-                className="mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="mt-4 bg-black text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
                 Add Beneficiary
             </button>

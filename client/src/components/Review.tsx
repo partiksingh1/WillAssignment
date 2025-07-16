@@ -1,7 +1,19 @@
 import { generateWillHTML } from "../helper/pdfHelper";
-import type { BankAccount, Beneficiary, InsurancePolicy, Jewellery, MutualFund, Property, Stock } from "../types/type";
+import type { BankAccount, Beneficiary, Executors, InsurancePolicy, Jewellery, MutualFund, Property, Stock, TestatorDetails } from "../types/type";
+interface ReviewProps {
+    testatorDetails: TestatorDetails,
+    beneficiaries: Beneficiary[],
+    bankAccounts: BankAccount[]
+    insurancePolicies: InsurancePolicy[]
+    stocks: Stock[]
+    mutualFunds: MutualFund[],
+    jewellery: Jewellery[],
+    house: Property[],
+    land: Property[],
+    executors: Executors
 
-export const ReviewComponent: React.FC<any> = ({ testatorDetails, beneficiaries, bankAccounts, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors }) => {
+}
+export const ReviewComponent: React.FC<ReviewProps> = ({ testatorDetails, beneficiaries, bankAccounts, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors }) => {
     const handleGenerateWill = async () => {
         try {
             await generateWillHTML(testatorDetails, bankAccounts, beneficiaries, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors)
@@ -11,7 +23,7 @@ export const ReviewComponent: React.FC<any> = ({ testatorDetails, beneficiaries,
     }
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-indigo-600 mb-4">Review & Generate Will</h2>
+            <h2 className="text-2xl font-bold text-black my-4">Review & Generate Will</h2>
             <div className="bg-gray-50 p-6 rounded-lg shadow-inner space-y-4 text-gray-700">
                 <h3 className="text-xl font-semibold text-gray-800">Testator Details</h3>
                 <p><strong>Name:</strong> {testatorDetails.name}</p>
@@ -112,10 +124,6 @@ export const ReviewComponent: React.FC<any> = ({ testatorDetails, beneficiaries,
                 <h3 className="text-xl font-semibold text-gray-800 mt-6">Executors</h3>
                 <p><strong>Primary Executor:</strong> {executors.primaryName}, son of {executors.primarySonOf}, resident of {executors.primaryResidentOf}.</p>
                 <p><strong>Alternate Executor:</strong> {executors.alternateName}, daughter of {executors.alternateDaughterOf}, resident of {executors.alternateResidentOf}.</p>
-
-                <p className="mt-6 text-sm text-gray-500">
-                    *Note: Residue Assets, Guardianship, and Discharge of Liabilities clauses will be included as per the template's standard wording in the generated will.
-                </p>
             </div>
             <button
                 onClick={handleGenerateWill}

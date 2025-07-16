@@ -48,31 +48,35 @@ function App() {
   const [currentStep, setCurrentStep] = useState<number>(0);
 
   return (
-    <div className='min-h-screen bg-gray-100 p-4 sm:p-6 font-sans'>
-      <div className='max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6 sm:p-8'>
-        <h1 className='text-3xl sm:text-4xl font-extrabold text-center text-indigo-700 mb-8'>
+    <div className='min-h-screen bg-gray border-2 p-4 sm:p-6 font-sans'>
+      <div className='max-w-4xl mx-auto  shadow-lg rounded-lg p-6 sm:p-8'>
+        <h1 className='text-3xl sm:text-4xl font-extrabold text-center text-black mb-8'>
           WILL GENERATOR
         </h1>
         <div className='mb-8'>
-          <div className='flex justify-between mb-4'>
+          <div className="flex justify-between gap-2 mb-6">
             {steps.map((step: string, index: number) => (
               <div
                 key={index}
-                className={`flex-1 text-center py-2 rounded-full cursor-pointer transition-all duration-300
-                  ${index === currentStep
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }
-                  ${index < currentStep ? 'bg-indigo-400 text-white' : ''}`}
+                className={`flex-1 text-center px-3 py-2 rounded-lg cursor-pointer select-none border transition-all duration-300
+                    ${index === currentStep
+                    ? 'bg-black text-white shadow'
+                    : index < currentStep
+                      ? 'bg-indigo-100 text-black border-indigo-300'
+                      : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'
+                  }`}
                 onClick={() => setCurrentStep(index)}
               >
-                <span className="hidden sm:inline">{step}</span>
-                <span className="sm:hidden">{index + 1}</span>
+                <span className="font-semibold">{index + 1}</span>
+                {index === currentStep && (
+                  <span className="ml-2">{step}</span>
+                )}
               </div>
             ))}
           </div>
+
           <div
-            className="bg-indigo-600 h-2.5 rounded-full transition-all duration-500"
+            className="bg-black h-2.5 rounded-full transition-all duration-500"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
           ></div>
         </div>
@@ -120,9 +124,9 @@ function App() {
         <ExecutorsComponent executors={executors} setExecutors={setExecutors} />
       }
       {/* Review & Generate Will */}
-      {currentStep === 10 && (
-        <ReviewComponent />
-      )}
+      {currentStep === 10 &&
+        <ReviewComponent testatorDetails={testatorDetails} bankAccounts={bankAccounts} beneficiaries={beneficiaries} stocks={stocks} mutualFunds={mutualFunds} insurancePolicies={insurancePolicies} jewellery={jewellery} house={house} land={land} executors={executors} />
+      }
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-8">
         {currentStep > 0 && (
@@ -136,7 +140,7 @@ function App() {
         {currentStep < steps.length - 1 && (
           <button
             onClick={nextStep}
-            className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-300"
+            className="bg-black text-white py-2 px-4 rounded-md hover:bg-white hover:text-black hover:border "
           >
             Next
           </button>

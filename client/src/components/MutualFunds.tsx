@@ -19,7 +19,7 @@ export const MfComponent: React.FC<MutualFundProps> = ({ mutualFunds, setMutualF
 
     return (
         <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-indigo-600 mb-4">Mutual Funds</h2>
+            <h2 className="text-2xl font-bold text-black my-4">Mutual Funds</h2>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow-sm">
                     <thead className="bg-gray-50">
@@ -60,7 +60,7 @@ export const MfComponent: React.FC<MutualFundProps> = ({ mutualFunds, setMutualF
                     </tbody>
                 </table>
             </div>
-            <button onClick={() => add()} className="mt-4 bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <button onClick={() => add()} className="mt-4 bg-black text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 Add Mutal Fund
             </button>
         </div>
