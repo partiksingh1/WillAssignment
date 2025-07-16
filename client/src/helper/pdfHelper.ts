@@ -13,7 +13,7 @@ export const generateWillHTML = async (
     executors: Executors
 ) => {
     try {
-        const response = await fetch("http://localhost:3000/generate-pdf", {
+        const response = await fetch(`${import.meta.env.VITE_URL}/generate-pdf`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
