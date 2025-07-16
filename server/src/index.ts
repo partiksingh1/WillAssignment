@@ -11,8 +11,23 @@ app.get("/", (req, res) => {
 });
 app.use(router);
 const PORT = process.env.PORT || 3000;
+const startKeepAlive = () => {
+    setInterval(async () => {
+        try {
+            const response = await fetch("https://willassignment.onrender.com");
+            if (response.ok) {
+                console.log("Keep-alive ping successful");
+            } else {
+                console.warn(`⚠️ Keep-alive responded with status: ${response.status}`);
+            }
+        } catch (err) {
+            console.error("❌ Keep-alive ping failed:", (err as Error).message);
+        }
+    }, 60 * 1000); // Every 1 minute
+};
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
+    startKeepAlive();
 });
-// Export the app for testing or further configuration
 export default app;
