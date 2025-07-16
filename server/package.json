@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && cp src/willTemplate.ejs dist/willTemplate.ejs",
+    "postinstall": "npx puppeteer install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node src/index.ts"
   },
@@ -16,7 +17,7 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "puppeteer": "^24.13.0"
+    "puppeteer": "^24.14.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
