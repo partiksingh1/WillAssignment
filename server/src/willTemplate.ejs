@@ -123,7 +123,7 @@ mentioned in this Will:
           <td><%= index + 1 %></td>
           <td><%= b.name %></td>
           <td><%= b.relationship %></td>
-          <td><%= b.id %></td>
+          <td><%= b.panAadhar %></td>
           <td><%= b.residence %></td>
           <td><%= b.age %></td>
         </tr>
@@ -152,10 +152,10 @@ mentioned in this Will:
         <% bankAccounts.forEach((acc, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= acc.bank %></td>
-            <td><%= acc.number %></td>
-            <td><%= acc.type %></td>
-            <td><%= acc.beneficiary %></td>
+            <td><%= acc.bankName %></td>
+            <td><%= acc.accountNumber %></td>
+            <td><%= acc.typeRemark %></td>
+            <td><%= acc.beneficiaryName %></td>
             <td><%= acc.share %></td>
           </tr>
         <% }) %>
@@ -180,10 +180,10 @@ mentioned in this Will:
         <% insurancePolicies.forEach((policy, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= policy.name %></td>
-            <td><%= policy.number %></td>
-            <td><%= policy.type %></td>
-            <td><%= policy.beneficiary %></td>
+            <td><%= policy.nameOfPolicy %></td>
+            <td><%= policy.policyNumber %></td>
+            <td><%= policy.typeRemark %></td>
+            <td><%= policy.beneficiaryName %></td>
             <td><%= policy.share %></td>
           </tr>
         <% }) %>
