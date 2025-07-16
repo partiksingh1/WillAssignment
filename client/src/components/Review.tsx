@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { generateWillHTML } from "../helper/pdfHelper";
 import type { BankAccount, Beneficiary, Executors, InsurancePolicy, Jewellery, MutualFund, Property, Stock, TestatorDetails } from "../types/type";
 interface ReviewProps {
@@ -14,14 +15,30 @@ interface ReviewProps {
 
 }
 export const ReviewComponent: React.FC<ReviewProps> = ({ testatorDetails, beneficiaries, bankAccounts, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors }) => {
+    const [loading, setLoading] = useState<boolean>(false);
     const handleGenerateWill = async () => {
         try {
+            setLoading(true)
             await generateWillHTML(testatorDetails, bankAccounts, beneficiaries, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors)
         } catch (error) {
             console.error("Error generating will:", error);
+        } finally {
+            setLoading(false)
         }
     }
+    {
+        loading && (
+            <div className="flex justify-center items-center mt-4">
+                <svg className="animate-spin h-6 w-6 text-green-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                </svg>
+                <span className="text-green-700 font-medium">Generating Will Document...</span>
+            </div>
+        )
+    }
     return (
+
         <div className="space-y-6">
             <h2 className="text-2xl font-bold text-black my-4">Review & Generate Will</h2>
             <div className="bg-gray-50 p-6 rounded-lg shadow-inner space-y-4 text-gray-700">
@@ -125,11 +142,14 @@ export const ReviewComponent: React.FC<ReviewProps> = ({ testatorDetails, benefi
                 <p><strong>Primary Executor:</strong> {executors.primaryName}, son of {executors.primarySonOf}, resident of {executors.primaryResidentOf}.</p>
                 <p><strong>Alternate Executor:</strong> {executors.alternateName}, daughter of {executors.alternateDaughterOf}, resident of {executors.alternateResidentOf}.</p>
             </div>
+
             <button
                 onClick={handleGenerateWill}
-                className="mt-6 w-full bg-green-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-300"
+                disabled={loading}
+                className={`mt-6 w-full py-3 px-6 rounded-md text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-300 
+        ${loading ? "bg-green-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700 text-white focus:ring-green-500"}`}
             >
-                Generate Will HTML
+                {loading ? "Processing..." : "Generate Will HTML"}
             </button>
         </div>
     )

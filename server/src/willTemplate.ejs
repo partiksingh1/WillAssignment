@@ -6,66 +6,60 @@
   <title>Last Will and Testament</title>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Georgia', serif;
       line-height: 1.6;
-      color: #333;
+      color: #000;
       max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border: 1px solid #000;
     }
     h1, h2, h3 {
-      color: #1a202c;
       text-align: center;
       margin-bottom: 15px;
     }
     h1 {
-      font-size: 2.5em;
-      border-bottom: 2px solid #4f46e5;
+      font-size: 2em;
+      border-bottom: 2px solid #000;
       padding-bottom: 10px;
       margin-bottom: 30px;
+      text-transform: uppercase;
     }
     h2 {
-      font-size: 1.8em;
-      color: #4f46e5;
-      margin-top: 25px;
-      border-bottom: 1px solid #a78bfa;
+      font-size: 1.5em;
+      border-bottom: 1px solid #000;
       padding-bottom: 5px;
+      margin-top: 40px;
     }
     h3 {
-      font-size: 1.4em;
-      color: #6d28d9;
-      margin-top: 20px;
+      font-size: 1.2em;
+      margin-top: 25px;
+      margin-bottom: 10px;
     }
     p {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       text-align: justify;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+      font-size: 0.95em;
     }
     th, td {
-      border: 1px solid #e2e8f0;
-      padding: 10px;
+      border: 1px solid #000;
+      padding: 8px;
       text-align: left;
     }
     th {
-      background-color: #e0e7ff;
+      background-color: #f2f2f2;
       font-weight: bold;
-      color: #312e81;
     }
     .signature-block {
       margin-top: 50px;
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       flex-wrap: wrap;
     }
     .signature-item {
@@ -73,37 +67,30 @@
       min-width: 250px;
       margin: 15px;
       padding: 15px;
-      border: 1px dashed #9ca3af;
-      border-radius: 6px;
-      background-color: #f0f4f8;
+      border: 1px dashed #000;
     }
     .signature-line {
-      border-bottom: 1px solid #333;
+      border-bottom: 1px solid #000;
       margin-top: 40px;
       margin-bottom: 5px;
     }
     .footer-note {
-      margin-top: 40px;
+      margin-top: 50px;
       font-size: 0.9em;
-      color: #666;
       text-align: center;
+      color: #444;
     }
   </style>
 </head>
 <body>
 
-  <h1>WILL OF <%=testator.name%></h1>
+  <h1>WILL OF <%= testator.name %></h1>
 
   <p>I, <strong><%= testator.name %></strong>, son of <strong><%= testator.sonOf %></strong>, residing at <strong><%= testator.residingAt %></strong>, declare this to be my LAST WILL being made on <strong><%= testator.willDate %></strong>.</p>
 
-  <p>I revoke all prior wills, codicils &amp; testamentary dispositions previously made by me. I am in
-    good health and of sound mind, and am not making this will under any persuasion or
-    coercion.</p>
-    <p>
-      I give, devise and bequeath all remaining movable and immovable assets, financial and
-physical assets owned by me and belonging to no one else to the following Beneficiaries as
-mentioned in this Will:
-    </p>
+  <p>I revoke all prior wills, codicils and testamentary dispositions previously made by me. I am in good health and of sound mind, and not making this will under any persuasion or coercion.</p>
+
+  <p>I give, devise, and bequeath all remaining movable and immovable assets, financial and physical assets owned by me and belonging to no one else to the following Beneficiaries as mentioned in this Will:</p>
 
   <h2>List of Beneficiaries</h2>
   <table>
@@ -130,13 +117,12 @@ mentioned in this Will:
       <% }) %>
     </tbody>
   </table>
-  <p>Below is the list of Assets and Percentage Share of each asset I would like to transfer to the
-    above Beneficiaries:</p>
 
-  <h2>Movable Assets (Financial Assets)</h2>
+  <p>Below is the list of assets and percentage share of each asset I would like to transfer to the above Beneficiaries:</p>
 
-  <% if (bankAccounts) { %>
-    <h3>a. Bank Accounts</h3>
+  <h2>Movable Assets - Financial</h2>
+  <% if (bankAccounts.length) { %>
+    <h3>Bank Accounts</h3>
     <table>
       <thead>
         <tr>
@@ -163,8 +149,8 @@ mentioned in this Will:
     </table>
   <% } %>
 
-  <% if (insurancePolicies) { %>
-    <h3>b. Insurance Policies</h3>
+  <% if (insurancePolicies.length) { %>
+    <h3>Insurance Policies</h3>
     <table>
       <thead>
         <tr>
@@ -177,22 +163,22 @@ mentioned in this Will:
         </tr>
       </thead>
       <tbody>
-        <% insurancePolicies.forEach((policy, index) => { %>
+        <% insurancePolicies.forEach((ip, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= policy.nameOfPolicy %></td>
-            <td><%= policy.policyNumber %></td>
-            <td><%= policy.typeRemark %></td>
-            <td><%= policy.beneficiaryName %></td>
-            <td><%= policy.share %></td>
+            <td><%= ip.nameOfPolicy %></td>
+            <td><%= ip.policyNumber %></td>
+            <td><%= ip.typeRemark %></td>
+            <td><%= ip.beneficiaryName %></td>
+            <td><%= ip.share %></td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   <% } %>
 
-  <% if (stocks) { %>
-    <h3>c. Stocks</h3>
+  <% if (stocks.length) { %>
+    <h3>Stocks</h3>
     <table>
       <thead>
         <tr>
@@ -205,27 +191,27 @@ mentioned in this Will:
         </tr>
       </thead>
       <tbody>
-        <% stocks.forEach((stock, index) => { %>
+        <% stocks.forEach((s, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= stock.brokerageFirm %></td>
-            <td><%= stock.accountNo %></td>
-            <td><%= stock.typeRemark %></td>
-            <td><%= stock.beneficiaryName %></td>
-            <td><%= stock.share %></td>
+            <td><%= s.brokerageFirm %></td>
+            <td><%= s.accountNo %></td>
+            <td><%= s.typeRemark %></td>
+            <td><%= s.beneficiaryName %></td>
+            <td><%= s.share %></td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   <% } %>
-  
-  <% if (mutualFunds) { %>
-    <h3>d. Mutual Funds</h3>
+
+  <% if (mutualFunds.length) { %>
+    <h3>Mutual Funds</h3>
     <table>
       <thead>
         <tr>
           <th>S.N.</th>
-          <th>MF Distributor</th>
+          <th>Distributor</th>
           <th>Account No</th>
           <th>Type / Remark</th>
           <th>Beneficiary</th>
@@ -246,30 +232,30 @@ mentioned in this Will:
       </tbody>
     </table>
   <% } %>
-  <h2>Movable Assets (Physical Assets)</h2>
 
-  <% if (jewellery) { %>
-    <h3>e. Jewellery</h3>
+  <h2>Movable Assets - Physical</h2>
+  <% if (jewellery.length) { %>
+    <h3>Jewellery</h3>
     <table>
       <thead>
         <tr>
           <th>S.N.</th>
-          <th>Type of Jewellery</th>
-          <th>Invoice Number</th>
-          <th>Type / Remark</th>
+          <th>Type</th>
+          <th>Invoice No</th>
+          <th>Remark</th>
           <th>Beneficiary</th>
           <th>% Share</th>
         </tr>
       </thead>
       <tbody>
-        <% jewellery.forEach((item, index) => { %>
+        <% jewellery.forEach((j, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= item.typeOfJewellery %></td>
-            <td><%= item.invoiceNumber %></td>
-            <td><%= item.typeRemark %></td>
-            <td><%= item.beneficiaryName %></td>
-            <td><%= item.share %></td>
+            <td><%= j.typeOfJewellery %></td>
+            <td><%= j.invoiceNumber %></td>
+            <td><%= j.typeRemark %></td>
+            <td><%= j.beneficiaryName %></td>
+            <td><%= j.share %></td>
           </tr>
         <% }) %>
       </tbody>
@@ -277,57 +263,56 @@ mentioned in this Will:
   <% } %>
 
   <h2>Immovable Assets</h2>
-
-  <% if (house) { %>
-    <h3>f. House Properties</h3>
+  <% if (house.length) { %>
+    <h3>House Properties</h3>
     <table>
       <thead>
         <tr>
           <th>S.N.</th>
-          <th>Name of Property</th>
-          <th>Registration Number</th>
-          <th>Type / Remark</th>
+          <th>Name</th>
+          <th>Reg. No</th>
+          <th>Remark</th>
           <th>Beneficiary</th>
           <th>% Share</th>
         </tr>
       </thead>
       <tbody>
-        <% house.forEach((property, index) => { %>
+        <% house.forEach((h, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= property.nameOfProperty %></td>
-            <td><%= property.registrationNumber %></td>
-            <td><%= property.typeRemark %></td>
-            <td><%= property.beneficiaryName %></td>
-            <td><%= property.share %></td>
+            <td><%= h.nameOfProperty %></td>
+            <td><%= h.registrationNumber %></td>
+            <td><%= h.typeRemark %></td>
+            <td><%= h.beneficiaryName %></td>
+            <td><%= h.share %></td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   <% } %>
-  
-  <% if (land) { %>
-    <h3>g. Land Properties</h3>
+
+  <% if (land.length) { %>
+    <h3>Land Properties</h3>
     <table>
       <thead>
         <tr>
           <th>S.N.</th>
-          <th>Name of Land</th>
-          <th>Registration Number</th>
-          <th>Type / Remark</th>
+          <th>Name</th>
+          <th>Reg. No</th>
+          <th>Remark</th>
           <th>Beneficiary</th>
           <th>% Share</th>
         </tr>
       </thead>
       <tbody>
-        <% land.forEach((property, index) => { %>
+        <% land.forEach((l, index) => { %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= property.nameOfLand %></td>
-            <td><%= property.registrationNumber %></td>
-            <td><%= property.typeRemark %></td>
-            <td><%= property.beneficiaryName %></td>
-            <td><%= property.share %></td>
+            <td><%= l.nameOfLand %></td>
+            <td><%= l.registrationNumber %></td>
+            <td><%= l.typeRemark %></td>
+            <td><%= l.beneficiaryName %></td>
+            <td><%= l.share %></td>
           </tr>
         <% }) %>
       </tbody>
@@ -335,10 +320,10 @@ mentioned in this Will:
   <% } %>
 
   <h2>Executors</h2>
-<p>
-  I appoint my elder brother <strong><%= executors.primaryName %></strong>, son of <strong><%= executors.primarySonOf %></strong>, resident of <strong><%= executors.primaryResidentOf %></strong>, to be the executor of this will.
-  If <%= executors.primaryName %> predeceases before me, my younger sister <strong><%= executors.alternateName %></strong>, daughter of <strong><%= executors.alternateDaughterOf %></strong>, resident of <strong><%= executors.alternateResidentOf %></strong>, will be the executor of this will.
-</p>
+  <p>
+    I appoint my elder brother <strong><%= executors.primaryName %></strong>, son of <strong><%= executors.primarySonOf %></strong>, resident of <strong><%= executors.primaryResidentOf %></strong>, to be the executor of this Will.
+    If <%= executors.primaryName %> predeceases me, then my sister <strong><%= executors.alternateName %></strong>, daughter of <strong><%= executors.alternateDaughterOf %></strong>, residing at <strong><%= executors.alternateResidentOf %></strong>, will act as the executor of this Will.
+  </p>
 
   <p>I hereby sign this will on <strong><%= testator.date %></strong> at <strong><%= testator.place %></strong>:</p>
 
@@ -361,7 +346,7 @@ mentioned in this Will:
     </div>
   </div>
 
-  <p class="footer-note">This document is a sample and should be reviewed by a legal professional.</p>
+  <p class="footer-note">Note: This document is a sample draft. Please consult a legal professional for review and notarization.</p>
 
 </body>
 </html>
