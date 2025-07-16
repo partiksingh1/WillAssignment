@@ -5,7 +5,18 @@ interface BeneficiaryProps {
     setBeneficiaries: React.Dispatch<React.SetStateAction<Beneficiary[]>>
 }
 export const BeneficiariesComponent: React.FC<BeneficiaryProps> = ({ beneficiaries, setBeneficiaries }) => {
+    const isBeneficiaryComplete = (b: Beneficiary) =>
+        b.name.trim() &&
+        b.relationship.trim() &&
+        b.panAadhar.trim() &&
+        b.residence.trim() &&
+        b.age.toString().trim();
     const addBeneficiary = () => {
+        const incomplete = beneficiaries.some((b) => !isBeneficiaryComplete(b));
+        if (incomplete) {
+            alert("Please fill all fields of the existing beneficiary before adding a new one.")
+            return
+        }
         setBeneficiaries([...beneficiaries, { sn: beneficiaries.length + 1, name: '', relationship: '', panAadhar: '', residence: '', age: '' }]);
     };
     const updateBeneficiary = (index: number, field: keyof Beneficiary, value: string) => {
