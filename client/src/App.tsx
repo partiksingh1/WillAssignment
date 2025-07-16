@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import type { BankAccount, Beneficiary, Executors, InsurancePolicy, Jewellery, MutualFund, Property, Stock, TestatorDetails } from './types/type';
 import { steps } from './types/steps';
+import { generateWillHTML } from './helper/pdfHelper';
 
 function App() {
   const [testatorDetails, setTestatorDetails] = useState<TestatorDetails>({
@@ -162,77 +163,6 @@ function App() {
   };
 
   const [currentStep, setCurrentStep] = useState<number>(0);
-
-  const generateWillHTML = async () => {
-    console.log("calles");
-
-    console.log("=== Testator Details ===");
-    console.log("Name:", testatorDetails.name);
-    console.log("Son/Daughter of:", testatorDetails.sonOf);
-    console.log("Residing at:", testatorDetails.residingAt);
-    console.log("Will Date:", testatorDetails.willDate);
-
-    console.log("\n=== Beneficiaries ===");
-    beneficiaries.forEach((b, i) => {
-      console.log(`${i + 1}. ${b.name} (${b.relationship}), PAN/Aadhar: ${b.panAadhar}, Residence: ${b.residence}, Age: ${b.age}`);
-    });
-
-    console.log("\n=== Bank Accounts ===");
-    bankAccounts.forEach((ba, i) => {
-      console.log(`${i + 1}. Bank: ${ba.bankName}, Account: ${ba.accountNumber}, Remark: ${ba.typeRemark}, Beneficiary: ${ba.beneficiaryName}, Share: ${ba.share}%`);
-    });
-
-    console.log("\n=== Insurance Policies ===");
-    insurancePolicies.forEach((ip, i) => {
-      console.log(`${i + 1}. Policy Name: ${ip.nameOfPolicy}, Policy No: ${ip.policyNumber}, Remark: ${ip.typeRemark}, Beneficiary: ${ip.beneficiaryName}, Share: ${ip.share}%`);
-    });
-
-    console.log("\n=== Stocks ===");
-    stocks.forEach((s, i) => {
-      console.log(`${i + 1}. Brokerage: ${s.brokerageFirm}, Account: ${s.accountNo}, Remark: ${s.typeRemark}, Beneficiary: ${s.beneficiaryName}, Share: ${s.share}%`);
-    });
-
-    console.log("\n=== Mutual Funds ===");
-    mutualFunds.forEach((mf, i) => {
-      console.log(`${i + 1}. Distributor: ${mf.mfDistributor}, Account: ${mf.accountNo}, Remark: ${mf.typeRemark}, Beneficiary: ${mf.beneficiaryName}, Share: ${mf.share}%`);
-    });
-
-    console.log("\n=== Jewellery ===");
-    jewellery.forEach((j, i) => {
-      console.log(`${i + 1}. Type: ${j.typeOfJewellery}, Invoice: ${j.invoiceNumber}, Remark: ${j.typeRemark}, Beneficiary: ${j.beneficiaryName}, Share: ${j.share}%`);
-    });
-
-    console.log("\n=== House Properties ===");
-    house.forEach((h, i) => {
-      console.log(`${i + 1}. Property: ${h.nameOfProperty}, Registration: ${h.registrationNumber}, Remark: ${h.typeRemark}, Beneficiary: ${h.beneficiaryName}, Share: ${h.share}%`);
-    });
-
-    console.log("\n=== Land Properties ===");
-    land.forEach((l, i) => {
-      console.log(`${i + 1}. Land: ${l.nameOfLand}, Registration: ${l.registrationNumber}, Remark: ${l.typeRemark}, Beneficiary: ${l.beneficiaryName}, Share: ${l.share}%`);
-    });
-
-    console.log("\n=== Residue Assets ===");
-    console.log("Any assets left out or purchased after this will is made should be transferred to my Wife, Reena Saxena, Completely.");
-
-    console.log("\n=== Guardian Clause ===");
-    console.log("If my wife Reema Saxena predeceases me, I appoint my elder brother Mr. Arpit Saxena as the guardian for my children Natasha and Sameer till they turn age 21.");
-    console.log("He shall be responsible for taking care of assets till age 21 and handing over the assets.");
-
-    console.log("\n=== Discharge of Liabilities ===");
-    console.log("On my death, the beneficiaries shall equally bear the administration expenses of Will Execution.");
-    console.log("And shall discharge my debts / liabilities from respective assets attached to the liabilities if any.");
-
-    console.log("\n=== Executors ===");
-    console.log("Primary Executor:", `${executors.primaryName}, son of ${executors.primarySonOf}, resident of ${executors.primaryResidentOf}.`);
-    console.log("Alternate Executor:", `${executors.alternateName}, daughter of ${executors.alternateDaughterOf}, resident of ${executors.alternateResidentOf}.`);
-
-    console.log("\n=== Witness Placeholders ===");
-    console.log("Witness 1 (Sign)\nName:\nAddress:\nDate:");
-    console.log("Witness 2 (Sign)\nName:\nAddress:\nDate:");
-    console.log("Testator (Sign)\nName:\nAddress:\nDate:");
-
-  }
 
   return (
     <div className='min-h-screen bg-gray-100 p-4 sm:p-6 font-sans'>
@@ -940,7 +870,7 @@ function App() {
             </p>
           </div>
           <button
-            onClick={generateWillHTML}
+            onClick={() => generateWillHTML(testatorDetails, bankAccounts, beneficiaries, insurancePolicies, stocks, mutualFunds, jewellery, house, land, executors)}
             className="mt-6 w-full bg-green-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-300"
           >
             Generate Will HTML
